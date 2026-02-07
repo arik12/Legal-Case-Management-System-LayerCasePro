@@ -59,6 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_case'])) {
 <title>Judge Dashboard | LawyerCasePro</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- PDF Generation Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="bg-gray-100">
 
@@ -99,13 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_case'])) {
         <button type="submit" name="search_case" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
             Search Cases
         </button>
+        <!-- Download PDF Button -->
+        <button type="button" id="downloadPdfBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2 transition duration-300">
+            <i class="fas fa-download"></i> Download 
+        </button>
     </form>
 </section>
 
 <!-- ================= CASE TABLE ================= -->
-<section class="bg-white shadow rounded-xl p-6 mb-10">
+<section class="bg-white shadow rounded-xl p-6 mb-10" id="printableSection">
     <h2 class="text-lg font-semibold mb-4">All Cases</h2>
-    <table class="w-full border text-sm">
+    <table class="w-full border text-sm" id="caseTable">
         <thead class="bg-gray-100">
             <tr>
                 <th class="border px-2 py-1">ID</th>
@@ -173,7 +181,93 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['search_case'])) {
     </div>
 </footer>
 
+<!-- ================= PDF DOWNLOAD SCRIPT ================= -->
+<script>
+/**
+ * Download Full Page as PDF with Header and Footer
+ * Captures the entire dashboard content and generates a professional PDF
+ */
+document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+    // Get the printable section (main content)
+    const printableSection = document.getElementById('printableSection');
+    
+    // Validate content exists
+    if (!printableSection || printableSection.innerHTML.trim() === '') {
+        alert('No content to download. Please load cases first.');
+        return;
+    }
+    
+    // Show loading message
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+    btn.disabled = true;
+    
+    // Create a clone to avoid modifying the DOM
+    const clonedSection = printableSection.cloneNode(true);
+    
+    // Set dimensions for html2pdf
+    const element = clonedSection;
+    const opt = {
+        margin: 15,
+        filename: 'LawyerCasePro_Dashboard_' + new Date().toISOString().slice(0, 10) + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, backgroundColor: '#ffffff' },
+        jsPDF: { orientation: 'landscape', unit: 'mm', format: 'a4' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    
+    // Get current date and time for header
+    const now = new Date();
+    const dateString = now.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric'
+    });
+    const timeString = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    
+    // Create header HTML
+    const headerHtml = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #0066CC; font-size: 24px; margin: 0 0 10px 0;">LawyerCasePro</h1>
+            <p style="color: #666; font-size: 12px; margin: 0 0 5px 0;">Judge Dashboard - Case Records Report</p>
+            <p style="color: #999; font-size: 10px; margin: 0;">Generated on: ${dateString} at ${timeString}</p>
+            <hr style="border: none; border-top: 2px solid #0066CC; margin: 10px 0;" />
+        </div>
+    `;
+    
+    // Create footer HTML
+    const footerHtml = `
+        <div style="text-align: center; margin-top: 20px; padding-top: 10px; border-top: 2px solid #0066CC; font-size: 8px; color: #666;">
+            <p style="margin: 5px 0;">© 2026 LawyerCasePro. All rights reserved.</p>
+            <p style="margin: 0; color: #999;">www.lawyercasepro.com | Page 1</p>
+        </div>
+    `;
+    
+    // Create complete document with header and footer
+    const completeElement = document.createElement('div');
+    completeElement.innerHTML = headerHtml + element.outerHTML + footerHtml;
+    
+    // Generate PDF using html2pdf
+    html2pdf().set(opt).from(completeElement).save().then(() => {
+        // Restore button state
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }).catch(error => {
+        console.error('PDF generation error:', error);
+        alert('Error generating PDF. Please try again.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+</script>
+
 </body>
 </html>
 
 <?php mysqli_close($conn); ?>
+
+
