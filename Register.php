@@ -30,8 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $sql = "INSERT INTO register (fullName, role, email, contact, password)
                         VALUES ('$fullName', '$role', '$email', '$contact', '$hashedPassword')";
-                if (mysqli_query($conn, $sql)) {
-                    echo "<h3 style='color:green;'>Registration successful! You can now <a href='./Login.html'>Login</a>.</h3>";
+             if (mysqli_query($conn, $sql)) {
+               
+    echo "<script>
+            alert('Registration successful! You can now Login');
+            window.location.href='./Login.php';
+          </script>";
+
+                
                     $_SESSION['email'] = $email;
                     $_SESSION['role'] = $role;
                     $_SESSION['fullName'] = $fullName;
@@ -75,9 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                </a>
           </div>
      </header>
-
-
-
 
 
      <section class="pt-32 pb-20">
@@ -169,3 +172,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
