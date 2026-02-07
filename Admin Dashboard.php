@@ -1,13 +1,22 @@
 <?php
+// Start session (used for login/auth if needed later)
 session_start();
 
-// ================= DATABASE CONNECTION =================
+// Database connection (XAMPP: localhost, root, no password)
 $conn = mysqli_connect("localhost", "root", "", "lawyercasepro");
-if (!$conn) die("Database Connection Failed: " . mysqli_connect_error());
 
-// ================= FORM SUBMISSION =================
+// Check database connection
+if (!$conn) {
+    die("Database Connection Failed: " . mysqli_connect_error());
+}
+
+// Message variable for success/error feedback
 $message = '';
+
+// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Collect form data
     $clientName   = $_POST['clientName'];
     $caseNo       = $_POST['caseNo'];
     $caseType     = $_POST['caseType'];
@@ -15,33 +24,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status       = $_POST['status'];
     $advocateName = $_POST['advocate_name'];
 
+    // Check if all fields are filled
     if ($clientName && $caseNo && $caseType && $courtName && $status && $advocateName) {
 
-        // Check if case number exists
+        // Check if the case number already exists in adminDashboard
         $check = mysqli_query($conn, "SELECT * FROM adminDashboard WHERE caseNo='$caseNo'");
+
         if (mysqli_num_rows($check) > 0) {
+            // If case number already exists
             $message = "<p style='color:red;'>Case number already exists!</p>";
         } else {
 
-            // Insert into adminDashboard
+            // Insert case data into adminDashboard table
             mysqli_query($conn, "INSERT INTO adminDashboard 
-                (clientName, caseNo, caseType, courtName, status, advocateName)
-                VALUES ('$clientName','$caseNo','$caseType','$courtName','$status','$advocateName')"); 
-
-                 mysqli_query($conn, "INSERT INTO judgeDashboard 
                 (clientName, caseNo, caseType, courtName, status, advocateName)
                 VALUES ('$clientName','$caseNo','$caseType','$courtName','$status','$advocateName')");
 
-          
+            // Insert the same case data into judgeDashboard table
+            mysqli_query($conn, "INSERT INTO judgeDashboard 
+                (clientName, caseNo, caseType, courtName, status, advocateName)
+                VALUES ('$clientName','$caseNo','$caseType','$courtName','$status','$advocateName')");
 
+            // Success message
             $message = "<p style='color:green;'>Case added successfully!</p>";
         }
 
     } else {
+        // If any field is empty
         $message = "<p style='color:red;'>All fields are required!</p>";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -222,5 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <?php mysqli_close($conn); ?>
+
+
 
 
