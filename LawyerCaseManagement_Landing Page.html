@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+     <!-- Character encoding -->
+     <meta charset="UTF-8">
+
+     <!-- Responsive design for mobile -->
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- Website title -->
+     <title>Lawyer Case Management System</title>
+
+     <!-- Tailwind CSS CDN: gives us utility classes (bg-, text-, flex, etc.)
+          without writing a separate CSS file -->
+     <script src="https://cdn.tailwindcss.com"></script>
+
+     <!-- Font Awesome icons: used for the balance-scale logo, gavel, envelope, etc. -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="text-gray-800">
+
+     <!-- ================= Header / Navigation Bar =================
+          Fixed at the top (fixed w-full) so it stays visible while scrolling.
+          z-40 keeps it above other page content. -->
+     <header class="bg-white shadow-md fixed w-full z-40 py-4">
+          <div class="container mx-auto flex justify-between items-center px-6">
+
+               <!-- Brand logo and name (left side of navbar) -->
+               <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-[#0060df]">
+                    <i class="fas fa-balance-scale"></i>
+                    <span id="brand-name">LawyerCasePro</span>
+               </a>
+
+               <!-- Navigation menu (right side, hidden on small screens via md:flex) -->
+               <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                    <!-- Anchor links scroll to sections on the same page -->
+                    <a href="#home" class="hover:text-[#0060df]" id="nav-home">Home</a>
+                    <a href="#features" class="hover:text-[#0060df]" id="nav-features">Features</a>
+                    <a href="#about" class="hover:text-[#0060df]" id="nav-about">About</a>
+                    <a href="#contact" class="hover:text-[#0060df]" id="nav-contact">Contact</a>
+
+                    <!-- Register button: sends user to the registration page -->
+                    <a href="./Register.php"
+                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                         id="nav-register">Register</a>
+
+                    <!-- Login button: sends user to the login page -->
+                    <a href="./Login.php"
+                         class="px-4 py-2 bg-[#0060df] text-white rounded-lg hover:bg-[#0047a0] transition"
+                         id="nav-login">Login</a>
+
+                    <!-- Language Toggle Button (EN <-> BN):
+                         JS in LawyerCaseManagementLanding Page.js listens for clicks on
+                         #lang-toggle and swaps text content/placeholders between English
+                         and Bengali across the page -->
+                    <button type="button" id="lang-toggle"
+                         class="px-3 py-2 border-2 border-[#0060df] text-[#0060df] rounded-lg font-semibold hover:bg-[#0060df] hover:text-white transition"
+                         title="Switch language / ভাষা পরিবর্তন করুন">
+                         <i class="fas fa-language mr-1"></i>
+                         <span id="lang-toggle-label">বাংলা</span>
+                    </button>
+               </nav>
+
+               <!-- Mobile language toggle: only visible on small screens (md:hidden hides
+                    it once the desktop nav appears), so mobile users can still switch
+                    language even though the full nav menu is collapsed -->
+               <button type="button" id="lang-toggle-mobile"
+                    class="md:hidden px-3 py-2 border-2 border-[#0060df] text-[#0060df] rounded-lg font-semibold text-sm"
+                    title="Switch language / ভাষা পরিবর্তন করুন">
+                    <i class="fas fa-language mr-1"></i>
+                    <span class="lang-toggle-label-mobile">বাংলা</span>
+               </button>
+          </div>
+     </header>
+
+     <!-- ================= Hero / Banner Section =================
+          First thing visitors see. pt-32 pushes content below the fixed header
+          so the heading isn't hidden underneath it. -->
+     <section id="home" class="pt-32 pb-20 bg-blue-50 text-center rounded-b-3xl">
+          <div class="container mx-auto px-6">
+
+               <!-- Main heading -->
+               <h1 class="text-4xl md:text-6xl font-bold text-[#0060df] mb-4" id="hero-title">
+                    Manage Cases Smarter with LCMS
+               </h1>
+
+               <!-- Subtitle text: short one-line pitch for the product -->
+               <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto" id="hero-subtitle">
+                    Simplify your legal workflow with an all-in-one case management system built for modern lawyers.
+               </p>
+
+               <!-- Call-to-action button: scrolls down to the Dashboard Features section -->
+               <a href="#features"
+                    class="inline-block bg-[#0060df] text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-[#0047a0] transition"
+                    id="hero-cta">Explore Features</a>
+          </div>
+     </section>
+
+     <!-- ================= Dashboard Features Section ================= -->
+
+
+     <section id="dashboard-features" class="py-20 bg-white">
+          <div class="container mx-auto px-6 text-center">
+
+               <!-- Section title -->
+               <h2 class="text-3xl font-bold text-[#0060df] mb-10" id="dashboard-features-title">Dashboard Features</h2>
+
+               <!-- Feature cards grid -->
+               <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+
+                    <!-- Admin feature card -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-sm hover:shadow-md transition">
+                         <i class="fas fa-user-shield text-[#0060df] text-3xl mb-3"></i>
+                         <h3 class="font-semibold text-lg mb-2" id="feature-admin-title">Admin</h3>
+                         <p id="feature-admin-text">
+                              Admins can add new clients, define case types, and manage court types.
+                         </p>
+                    </div>
+
+                    <!-- Advocate feature card -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-sm hover:shadow-md transition">
+                         <i class="fas fa-gavel text-[#0060df] text-3xl mb-3"></i>
+                         <h3 class="font-semibold text-lg mb-2" id="feature-advocate-title">Advocate</h3>
+                         <p id="feature-advocate-text">
+                              Advocates can add and manage cases, hearings, and case status.
+                         </p>
+                    </div>
+
+                    <!-- Client feature card -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-sm hover:shadow-md transition">
+                         <i class="fas fa-user text-[#0060df] text-3xl mb-3"></i>
+                         <h3 class="font-semibold text-lg mb-2" id="feature-client-title">Client</h3>
+                         <p id="feature-client-text">
+                              Clients can view case details and hearing information in read-only mode.
+                         </p>
+                    </div>
+
+                    <!-- Judge feature card -->
+                    <div class="p-6 bg-blue-50 rounded-xl shadow-sm hover:shadow-md transition">
+                         <i class="fas fa-balance-scale text-[#0060df] text-3xl mb-3"></i>
+                         <h3 class="font-semibold text-lg mb-2" id="feature-judge-title">Judge</h3>
+                         <p id="feature-judge-text">
+                              Judges can manage case hearings, status updates, and case history.
+                         </p>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- ================= About Section ================= -->
+
+     <section id="about" class="py-20 bg-blue-50 text-center">
+          <div class="container mx-auto px-6 max-w-3xl">
+
+               <!-- About title -->
+               <h2 class="text-3xl font-bold text-[#0060df] mb-6" id="about-title">About LCMS</h2>
+
+               <!-- About description -->
+               <p class="text-lg text-gray-600 leading-relaxed" id="about-text">
+                    The Lawyer Case Management System helps advocates and law firms manage cases easily.
+               </p>
+          </div>
+     </section>
+
+
+     <!-- ================= Contact Section ================= -->
+
+
+     <section id="contact" class="py-20 bg-white">
+          <div class="container mx-auto px-6 lg:px-8">
+               <h2 class="text-3xl md:text-4xl font-bold text-center text-[#0060df] mb-6" id="contact-title">Get in
+                    Touch</h2>
+               <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto" id="contact-subtitle">
+                    Have questions, feedback, or need assistance? Send us a message — we’d love to hear from you.
+               </p>
+
+               <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+
+
+                    <!-- Contact Form -->
+                    <div class="p-8 bg-blue-50 rounded-2xl shadow-lg">
+                         <h3 class="text-2xl font-semibold mb-6 text-center text-[#0060df]" id="contact-form-title">
+                              Send a Message
+                         </h3>
+
+                         <form id="contact-form" class="space-y-5" action="./Contact.php" method="POST">
+
+                              <!-- Full name field -->
+                              <div>
+                                   <label for="name" class="block text-sm font-medium text-gray-700 mb-1"
+                                        id="label-name">
+                                        Full Name
+                                   </label>
+                                   <input type="text" id="name" name="name" placeholder="Enter your name"
+                                        data-ph-en="Enter your name" data-ph-bn="আপনার নাম লিখুন"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060df] focus:outline-none"
+                                        required>
+                              </div>
+
+                              <!-- Email field -->
+                              <div>
+                                   <label for="email" class="block text-sm font-medium text-gray-700 mb-1"
+                                        id="label-email">
+                                        Email Address
+                                   </label>
+                                   <input type="email" id="email" name="email" placeholder="Enter your email"
+                                        data-ph-en="Enter your email" data-ph-bn="আপনার ইমেইল লিখুন"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060df] focus:outline-none"
+                                        required>
+                              </div>
+
+                              <!-- Subject field -->
+                              <div>
+                                   <label for="subject" class="block text-sm font-medium text-gray-700 mb-1"
+                                        id="label-subject">
+                                        Subject
+                                   </label>
+                                   <input type="text" id="subject" name="subject" placeholder="Subject"
+                                        data-ph-en="Subject" data-ph-bn="বিষয়"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060df] focus:outline-none"
+                                        required>
+                              </div>
+
+                              <!-- Message textarea -->
+                              <div>
+                                   <label for="message" class="block text-sm font-medium text-gray-700 mb-1"
+                                        id="label-message">
+                                        Message
+                                   </label>
+                                   <textarea id="message" name="message" rows="4"
+                                        placeholder="Type your message here..." data-ph-en="Type your message here..."
+                                        data-ph-bn="এখানে আপনার বার্তা লিখুন..."
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#0060df] focus:outline-none"
+                                        required></textarea>
+                              </div>
+
+                              <!-- Submit button -->
+                              <button type="submit"
+                                   class="w-full bg-[#0060df] text-white py-3 rounded-full font-semibold hover:bg-[#0047a0] transition"
+                                   id="contact-btn">
+                                   Send Message
+                              </button>
+
+                         </form>
+                    </div>
+
+
+                    <!-- Contact Information -->
+                    <div
+                         class="p-8 bg-[#0060df] text-white rounded-2xl shadow-lg flex flex-col justify-center space-y-6">
+                         <h3 class="text-2xl font-semibold mb-4 text-center" id="contact-info-title">Contact Information
+                         </h3>
+                         <div class="flex items-center space-x-4">
+                              <i class="fas fa-map-marker-alt text-xl"></i>
+                              <div>
+                                   <p class="font-bold" id="info-address-title">Address</p>
+                                   <p class="text-sm" id="info-address-text">Ramna, Dhaka, Bangladesh</p>
+                              </div>
+                         </div>
+                         <div class="flex items-center space-x-4">
+                              <i class="fas fa-envelope text-xl"></i>
+                              <div>
+                                   <p class="font-bold" id="info-email-title">Email</p>
+                                   <p class="text-sm" id="info-email-text">info@lawyercasepro.com</p>
+                              </div>
+                         </div>
+                         <div class="flex items-center space-x-4">
+                              <i class="fas fa-phone-alt text-xl"></i>
+                              <div>
+                                   <p class="font-bold" id="info-phone-title">Phone</p>
+                                   <p class="text-sm" id="info-phone-text">+880 123 456789</p>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <!-- ================= Footer ================= -->
+     <footer class="bg-[#001f3f] text-white py-10 mt-16 rounded-t-3xl">
+          <div class="container mx-auto px-4 md:px-6 lg:px-8 text-center space-y-3">
+               <div class="mb-4">
+                    <a href="#" class="flex items-center justify-center space-x-2 text-xl font-bold">
+                         <i class="fas fa-balance-scale text-[#0060df]"></i>
+                         <span id="footer-brand">LawyerCasePro</span>
+                    </a>
+               </div>
+               <p class="text-sm" id="footer-contact">Contact: info@lawyercasepro.com | +880 123 456789</p>
+               <p class="text-sm">&copy; 2026 LawyerCasePro. All rights reserved.</p>
+          </div>
+     </footer>
+
+     <!-- External JS:-->
+     <script src="./LawyerCaseManagementLanding Page.js"></script>
+
+
+</body>
+
+</html>
