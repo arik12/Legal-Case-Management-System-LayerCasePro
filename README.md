@@ -16,8 +16,6 @@ On top of that, the system also comes with a few extra things that make it easy 
 - 🔍 A **search box** to quickly find a case by case number, client name, or advocate name.
 - 🔐 Safe **login and registration**, with passwords stored in an encrypted (hashed) form, not plain text.
 
-In short — one login, one dashboard per role, and everything a small law office needs to keep track of its cases.
-
 ---
 
 ## 📋 Table of Contents
