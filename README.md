@@ -178,10 +178,4 @@ Contributions, issues, and feature requests are welcome!
 
 ---
 
-## 📬 Contact
 
-**Asad Arik Azad**
-Full Stack Web Developer 
-
-
----
